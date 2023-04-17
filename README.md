@@ -1,7 +1,14 @@
 # Airflow Abstract Pipeline
+**Pipeline Abstraction** is built on task group, it is designed to build abstractions on a group of re-usable tasks and their structure.
+
 This repo could be separated into two parts:
 + The Airflow Infra described below
 + The demo Airflow dags
+  + [Pipeline Abstraction](python/common/pipeline.py)
+  + [Pipeline Example: two_day_pipeline](python/common/two_day_pipeline.py)
+  + [Pipeline Example: three_day_pipeline](python/common/three_day_pipeline.py)
+  + [Pipeline Use Case](python/dags/00_get_started.py)
+
 
 ## Install Pants and Python
 1. Install Pants: https://www.pantsbuild.org/docs/installation

@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from common.two_day_pipeline import TwoDayPipeline
+from common.three_day_pipeline import ThreeDayPipeline
 
 dag_args = {
     'owner': 'da',
@@ -14,4 +15,5 @@ dag_args = {
 
 with DAG(dag_id='demo_dag', default_args=dag_args) as dag:
     two_day_tg = TwoDayPipeline("two_day_tg").task_group()
-    two_day_tg
+    three_day_tg = ThreeDayPipeline("three_day_tg").task_group()
+    two_day_tg >> three_day_tg

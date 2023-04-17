@@ -4,18 +4,23 @@ from airflow.operators.bash import BashOperator
 from airflow.utils.task_group import TaskGroup
 
 
-class TwoDayPipeline(Pipeline):
+class ThreeDayPipeline(Pipeline):
     def task_group(self): 
         with TaskGroup(self.tg_id, tooltip="TwoDayPipeline") as group:
-            today = BashOperator(
-                task_id="today",
+            day_1 = BashOperator(
+                task_id="day_1",
                 bash_command="echo {{ ds }}"
             )
         
-            tomorrow = BashOperator(
-                task_id="tommorrow",
+            day_2 = BashOperator(
+                task_id="day_2",
                 bash_command="echo {{ next_ds }}"
             )
 
-            today >> tomorrow
+            day_3 = BashOperator(
+                task_id="day_3",
+                bash_command="echo {{ tomorrow_ds }}"
+            )
+
+            day_1 >> day_2 >> day_3
         return group
