@@ -1,0 +1,11 @@
+python_sources(
+    name="cli",
+)
+
+pex_binary(
+    name = "pex", 
+    dependencies=[
+        ":cli",
+        "//python/dags:sources"
+    ]
+)

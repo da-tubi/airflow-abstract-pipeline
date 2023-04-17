@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -x
+xrepo install "python 3.10"
+PATH_TO_PYTHON=$(xrepo env -b "python 3.10" python -c "import sys; print('/'.join(sys.executable.split('/')[:-2]))")
+ln -s $PATH_TO_PYTHON/bin/python3.10 $HOME/.local/bin/python3.10
+$HOME/.local/bin/python3.10 --version

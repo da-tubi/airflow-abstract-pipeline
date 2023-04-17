@@ -1,0 +1,3 @@
+#!/bin/bash
+
+$HOME/airflow/bin/python -m airflow_config

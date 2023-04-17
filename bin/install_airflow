@@ -1,0 +1,20 @@
+#!/bin/bash
+
+pants package airflow:pex
+
+PEX=`pwd`/dist/airflow/pex.pex
+AIRFLOW_SCRIPT=`pwd`/bin/airflow
+TARGET_PYTHON=$HOME/airflow/bin/python
+TARGET_AIRFLOW=$HOME/bin/airflow
+
+
+cmp --silent $PEX $TARGET_PYTHON || \
+  (mkdir -p $HOME/airflow/bin && \
+   cp $PEX $TARGET_PYTHON && \
+   echo "Deloyed to $TARGET_PYTHON")
+
+cmp --silent $AIRFLOW_SCRIPT $TARGET_AIRFLOW || \
+  (mkdir -p $HOME/bin && \
+   cp $AIRFLOW_SCRIPT $TARGET_AIRFLOW && \
+   echo "Deloyed to $TARGET_AIRFLOW ")
+
