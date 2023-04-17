@@ -1,14 +1,7 @@
-# Pants Airflow Minimal
+# Airflow Abstract Pipeline
 This repo could be separated into two parts:
 + The Airflow Infra described below
 + The demo Airflow dags
-  + [00_get_started.py](python/dags/00_get_started.py)
-  + [01_example_branch.py](python/dags/01_example_branch.py) from official Airflow demo
-  + [02_brancher.py](python/dags/02_brancher.py): How to use BranchPythonOperator or `@task.branch()` when `Trigger Dag w/ config`
-  + [03_example_task_group.py](python/dags/03_example_task_group.py) from offical Airflow demo
-  + [04_backfill_task_group_with_switcher.py](python/dags/04_backfill_task_group_with_switcher.py): Enable/Disable tasks in the task group
-  + [05_backfill_task_group_with_brancher.py](python/dags/05_backfill_task_group_with_brancher.py): Branch to backfill in the task group
-
 
 ## Install Pants and Python
 1. Install Pants: https://www.pantsbuild.org/docs/installation
