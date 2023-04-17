@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
+from common.two_day_pipeline import TwoDayPipeline
 
 dag_args = {
     'owner': 'da',
     'depends_on_past': False,
-    'start_date': datetime(2023, 3, 1),
+    'start_date': datetime(2023, 4, 15),
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'schedule_interval': '@daily',
@@ -13,9 +13,5 @@ dag_args = {
 
 
 with DAG(dag_id='demo_dag', default_args=dag_args) as dag:
-    task = BashOperator(
-        task_id='my_task',
-        bash_command='date',
-    )
-    
-    task
+    two_day_tg = TwoDayPipeline("two_day_tg").task_group()
+    two_day_tg
