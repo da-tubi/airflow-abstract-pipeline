@@ -15,20 +15,31 @@ dag_args = {
 }
 
 def t1_callable(**context):
+    ti = context['ti']
+    task_id = ti.task_id
     if context["data_interval_start"].day % 2 == 0:
+        ti.xcom_push("error_type", "SHOULD_RETRY")
         raise AirflowFailException()
+    ti.xcom_push("error_type", "OK")
 
 def t2_callable(**context):
+    ti = context['ti']
+    task_id = ti.task_id
     if context["data_interval_start"].day % 3 == 0:
+        ti.xcom_push("error_type", "FAIL")
         raise AirflowFailException()
+    ti.xcom_push("error_type", "OK")
 
 def t3_callable(**context):
     if context["data_interval_start"].day % 4 == 0:
         raise AirflowFailException()
 
 def try_next_or_fail(**context):
-    print("prev_id:")
-    print(context["prev_id"])
+    ti = context['ti']
+    prev_id = context["prev_id"]
+    error_type = ti.xcom_pull(task_ids=prev_id, key="error_type")
+    if error_type != "SHOULD_RETRY":
+        raise AirflowFailException("Will not re-try, because the error type is {}", error_type)
 
 def gen_tasks():
     t1 = PythonOperator(task_id="t1", python_callable=t1_callable)

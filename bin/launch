@@ -1,0 +1,5 @@
+#!/usr/bin/env elvish
+
+bin/install_airflow.elv
+bin/airflow_config
+bin/airflow standalone
