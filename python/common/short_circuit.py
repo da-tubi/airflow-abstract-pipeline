@@ -7,14 +7,14 @@ from airflow.exceptions import AirflowFailException
 from airflow.utils.trigger_rule import TriggerRule
 
 
-class ShortCircuitPipeline(Pipeline):
+class TryInSeqPipeline(Pipeline):
     def __init__(self, tg_id, gen_tasks, try_next_or_fail):
-        super(ShortCircuitPipeline, self).__init__(tg_id)
+        super(TryInSeqPipeline, self).__init__(tg_id)
         self.try_next_or_fail = try_next_or_fail
         self.gen_tasks = gen_tasks
 
     def task_group(self): 
-        with TaskGroup(self.tg_id, tooltip="ShortCircuitPipeline") as group:
+        with TaskGroup(self.tg_id, tooltip="TryInSeqPipeline") as group:
             end = EmptyOperator(task_id="end", trigger_rule=TriggerRule.ONE_SUCCESS)
             tasks = self.gen_tasks()
             N = len(tasks)

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from common.short_circuit import ShortCircuitPipeline
+from common.short_circuit import TryInSeqPipeline
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
 from airflow.exceptions import AirflowFailException
@@ -49,5 +49,5 @@ def gen_tasks():
 
 with DAG(dag_id='short_circuit', default_args=dag_args) as dag:
     final_end = EmptyOperator(task_id = "final_end")
-    sc_tg = ShortCircuitPipeline(tg_id="sc_tg", gen_tasks=gen_tasks, try_next_or_fail=try_next_or_fail).task_group()
+    sc_tg = TryInSeqPipeline(tg_id="sc_tg", gen_tasks=gen_tasks, try_next_or_fail=try_next_or_fail).task_group()
     sc_tg >> final_end
